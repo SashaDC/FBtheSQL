@@ -1,14 +1,11 @@
-import { useGetAllUsers, useGetUserById } from '../hooks/useUsers.ts'
+import UserPage from './UserPage'
 
 function App() {
-  const { data: allUsers } = useGetAllUsers()
-  const { data: specifiedUser } = useGetUserById(7)
-  console.log(allUsers, specifiedUser)
-
   return (
     <>
       <div className="app">
-        <h1>Fullstack Boilerplate!</h1>
+        <h1>FB the Sequel</h1>
+        <UserPage />
       </div>
     </>
   )
