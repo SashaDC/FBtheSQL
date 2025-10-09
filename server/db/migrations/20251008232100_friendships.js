@@ -12,6 +12,7 @@ export async function up(knex) {
       .references('users.id')
       .onDelete('CASCADE')
     table.unique(['user_1', 'user_2'])
+    table.check('?? < ??', ['user_1', 'user_2'])
   })
 }
 
