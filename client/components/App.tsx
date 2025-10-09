@@ -2,7 +2,7 @@ import { useGetAllUsers, useGetUserById } from '../hooks/useUsers.ts'
 
 function App() {
   const { data: allUsers } = useGetAllUsers()
-  const { data: specifiedUser } = useGetUserById(1)
+  const { data: specifiedUser } = useGetUserById(7)
   console.log(allUsers, specifiedUser)
 
   return (

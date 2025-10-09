@@ -7,8 +7,8 @@ const router = Router()
 
 router.get('/all', async (req, res) => {
   try {
-    const data: User[] = await db.getAllUsers()
-    res.json(data)
+    const userList: User[] = await db.getAllUsers()
+    res.json(userList)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
@@ -18,8 +18,8 @@ router.get('/all', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const data: User = await db.getUserById(Number.parseInt(id))
-    res.json(data)
+    const user: User | null = await db.getUserById(Number.parseInt(id))
+    res.json(user)
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })

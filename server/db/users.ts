@@ -12,7 +12,7 @@ export async function getAllUsers() {
   return response as User[]
 }
 
-export async function getUserById( id: number) {
+export async function getUserById(id: number) {
   const response = await db('users')
     .where('users.id', id)
     .select([
@@ -23,5 +23,5 @@ export async function getUserById( id: number) {
       'avatar_url as avatarUrl',
     ])
     .first()
-  return response as User
+  return response as User | null
 }

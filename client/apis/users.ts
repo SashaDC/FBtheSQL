@@ -8,7 +8,7 @@ export async function getAllUsers(): Promise<User[]> {
   return response.body
 }
 
-export async function getUserById(userId: number): Promise<User> {
+export async function getUserById(userId: number): Promise<User | null> {
   const response = await request.get(`${rootURL}/users/${userId}`)
   return response.body
 }
