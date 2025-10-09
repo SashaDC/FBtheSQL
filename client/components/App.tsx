@@ -1,13 +1,14 @@
-import { useFruits } from '../hooks/useFruits.ts'
+import { useGetAllUsers, useGetUserById } from '../hooks/useUsers.ts'
 
 function App() {
-  const { data } = useFruits()
+  const { data: allUsers } = useGetAllUsers()
+  const { data: specifiedUser } = useGetUserById(1)
+  console.log(allUsers, specifiedUser)
 
   return (
     <>
       <div className="app">
-        <h1>Fullstack Boilerplate - with Fruits!</h1>
-        <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
+        <h1>Fullstack Boilerplate!</h1>
       </div>
     </>
   )
