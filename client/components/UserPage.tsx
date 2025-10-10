@@ -1,11 +1,15 @@
+import { useOutletContext } from 'react-router'
 import {
   useGetAllUsers,
   useGetUserById,
   useAddNewUser,
   useEditUser,
 } from '../hooks/useUsers.ts'
+import { Credentials } from '../../models/outletContext.ts'
 
 function UserPage() {
+  const { setCredentials } = useOutletContext<Credentials>()
+
   const { data: allUsers } = useGetAllUsers()
   const { data: specifiedUser } = useGetUserById(4)
   console.log(allUsers, specifiedUser)
@@ -38,6 +42,16 @@ function UserPage() {
         </button>
         <button id="edit" onClick={handleClick}>
           Edit user
+        </button>
+        <button
+          className="button"
+          onClick={() => {
+            // This signs the user out of the account.
+            setCredentials(false)
+            sessionStorage.removeItem('credentials')
+          }}
+        >
+          Log Out
         </button>
       </div>
     </>
