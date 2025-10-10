@@ -1,3 +1,4 @@
+import { useAddNewFriendship } from '../hooks/useFriends.ts'
 import {
   useGetAllUsers,
   useGetUserById,
@@ -14,22 +15,31 @@ function UserPage() {
   console.log(allUsers, specifiedUser, userAndFriends)
   const addNewUser = useAddNewUser()
   const editUser = useEditUser(userId)
+  const addFriend = useAddNewFriendship(5, userId)
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.id == 'add'
-      ? addNewUser.mutate({
+    switch (e.currentTarget.id) {
+      case 'addUser':
+        addNewUser.mutate({
           avatarUrl: '/images/avatar1.svg',
           fullName: 'Sailor Brian',
           accountName: 'ShipMate',
           email: 'brian@sea.co.nz',
         })
-      : editUser.mutate({
+        break
+      case 'editUser':
+        editUser.mutate({
           id: userId,
           avatarUrl: '/images/avatar2.svg',
           fullName: 'Jacky Jim',
           accountName: 'ShipMate',
           email: 'jimmybob@gmail.com',
         })
+        break
+      case 'addFriend':
+        addFriend.mutate({ userId1: 5, userId2: userId })
+        break
+    }
   }
 
   return (
@@ -55,12 +65,18 @@ function UserPage() {
             </ol>
           </div>
         )}
-        <button id="add" onClick={handleClick}>
+        <button id="addUser" onClick={handleClick}>
           Add user
         </button>
-        <button id="edit" onClick={handleClick}>
+        <button id="editUser" onClick={handleClick}>
           Edit user
         </button>
+        <button id="addFriend" onClick={handleClick}>
+          Add Friend
+        </button>
+        {/* <button id="editFriend" onClick={handleClick}>
+          Edit Friend
+        </button> */}
       </div>
     </>
   )

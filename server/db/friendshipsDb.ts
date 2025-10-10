@@ -26,3 +26,17 @@ export async function getFriendsOfAUser(id: number): Promise<User[]> {
     ])
   return [...friendsWhereUserIsUser1, ...friendsWhereUserIsUser2] as User[]
 }
+
+export async function addNewFriendship(
+  id: number,
+  id2: number,
+): Promise<number> {
+  //Sort ids so that lower id is always added as user_1
+  const smallerId: number = id < id2 ? id : id2
+  const largerId: number = id > id2 ? id : id2
+  const response = await db('friendships')
+    .returning(['id', 'user_1 as user1', 'user_2 as user2'])
+    .insert({ user_1: smallerId, user_2: largerId })
+  console.log(response)
+  return 1
+}
