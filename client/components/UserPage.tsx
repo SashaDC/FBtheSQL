@@ -8,7 +8,8 @@ function UserPage() {
   return (
     <>
       <div className="app">
-        <Profile />
+        {/* TODO - have userId relate to the login details so user can see their page */}
+        <Profile userId={1} />
         <button
           className="button"
           onClick={() => {

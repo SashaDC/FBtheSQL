@@ -78,3 +78,8 @@ export async function editUser({
   )
   return updatedUser[0] ? (updatedUser[0] as User) : null
 }
+
+export async function deleteUserById(id: number): Promise<void> {
+  console.log('delete', id)
+  await db('users').where('users.id', id).del()
+}

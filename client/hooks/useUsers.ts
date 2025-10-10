@@ -4,6 +4,8 @@ import {
   getUserById,
   addNewUser,
   editUser,
+  getUserPlusFriends,
+  deleteUserById,
 } from '../apis/users.ts'
 
 export function useGetAllUsers() {
@@ -23,12 +25,35 @@ export function useGetUserById(id: number) {
   }
 }
 
+export function useGetUserPlusFriends(id: number) {
+  const query = useQuery({
+    queryKey: [`user${id}PlusFriends`],
+    queryFn: () => getUserPlusFriends(id),
+  })
+  return {
+    ...query,
+  }
+}
+
 export function useAddNewUser() {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: addNewUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-list'] })
+    },
+  })
+  return mutation
+}
+
+export function useDeleteUserById(id: number) {
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: deleteUserById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user-list'] })
+      queryClient.invalidateQueries({ queryKey: [`user${id}`] })
+      queryClient.invalidateQueries({ queryKey: [`user${id}PlusFriends`] })
     },
   })
   return mutation
@@ -41,6 +66,7 @@ export function useEditUser(id: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-list'] })
       queryClient.invalidateQueries({ queryKey: [`user${id}`] })
+      queryClient.invalidateQueries({ queryKey: [`user${id}PlusFriends`] })
     },
   })
   return mutation
