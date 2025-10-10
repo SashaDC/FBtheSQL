@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from 'react'
 import { Link } from 'react-router'
+import { useAddNewUser } from '../hooks/useUsers'
 
 export default function SignUpForm() {
   // The useState/handleChange allows the users text to show while typing
@@ -20,14 +21,23 @@ export default function SignUpForm() {
     }))
   }
 
+  const addNewUser = useAddNewUser()
+
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    const full_Name = `${formState.firstName} ${formState.lastName}`
-    console.log(full_Name)
+    const fullName = `${formState.firstName} ${formState.lastName}` // Need to capitalize the first character of both first/last name.
     // TO DO: set it up so that it verifies the data (No numbers/characters for first/last name)
     // TO DO: check against database whether the data is there or not.
-    // If comes back as true: mention what needs to be changed, If it comes back false: add the new details to database and "login"
+    // If comes back as true: mention what needs to be changed, If it comes back false: add the new details to database and "login".
     // Note: maybe make the checking/verifying data it's own component/hook??
+
+    // Adds info to database
+    addNewUser.mutate({
+      accountName: formState.username,
+      fullName: fullName,
+      email: formState.email,
+      avatarUrl: '/images/avatar1.svg',
+    })
   }
 
   return (
@@ -54,8 +64,8 @@ export default function SignUpForm() {
         <label htmlFor="username">Username:</label>
         <input
           type="text"
-          id="userName"
-          name="userName"
+          id="username"
+          name="username"
           placeholder="Username"
           value={formState.username}
           onChange={handleChange}
