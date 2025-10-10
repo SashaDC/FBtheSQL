@@ -4,8 +4,9 @@ import type { User, UserData } from '../../models/users.ts'
 export async function getAllUsers(): Promise<User[]> {
   const response = await db('users').select([
     'id',
-    'full_name as fullName',
-    'account_name as accountName',
+    'first_name as firstName',
+    'last_name as lastName',
+    'username',
     'email',
     'avatar_url as avatarUrl',
   ])
@@ -17,8 +18,9 @@ export async function getUserById(id: number): Promise<User | null> {
     .where('users.id', id)
     .select([
       'id',
-      'full_name as fullName',
-      'account_name as accountName',
+      'first_name as firstName',
+      'last_name as lastName',
+      'username',
       'email',
       'avatar_url as avatarUrl',
     ])
@@ -27,16 +29,18 @@ export async function getUserById(id: number): Promise<User | null> {
 }
 
 export async function addNewUser({
-  fullName,
+  firstName,
+  lastName,
   email,
-  accountName,
+  username,
   avatarUrl,
 }: UserData): Promise<number> {
   const [{ id }] = await db('users')
     .insert({
-      full_name: fullName,
-      email,
-      account_name: accountName,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      username: username,
       avatar_url: avatarUrl,
     })
     .returning('users.id')
@@ -49,23 +53,26 @@ export async function addNewUser({
 
 export async function editUser({
   id,
-  fullName,
+  firstName,
+  lastName,
   email,
-  accountName,
+  username,
   avatarUrl,
 }: User): Promise<null | User> {
   const updatedUser = await db('users').where({ id }).update(
     {
-      full_name: fullName,
+      first_name: firstName,
+      last_name: lastName,
       email: email,
-      account_name: accountName,
+      username: username,
       avatar_url: avatarUrl,
     },
     [
       'id',
-      'full_name as fullName',
+      'first_name as firstName',
+      'last_name as lastName',
+      'username',
       'email',
-      'account_name as accountName',
       'avatar_url as avatarUrl',
     ],
   )

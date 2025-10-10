@@ -25,7 +25,7 @@ export default function SignUpForm() {
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    const fullName = `${formState.firstName} ${formState.lastName}` // Need to capitalize the first character of both first/last name.
+    // Need to capitalize the first character of both first/last name.
     // TO DO: set it up so that it verifies the data (No numbers/characters for first/last name)
     // TO DO: check against database whether the data is there or not.
     // If comes back as true: mention what needs to be changed, If it comes back false: add the new details to database and "login".
@@ -33,8 +33,9 @@ export default function SignUpForm() {
 
     // Adds info to database
     addNewUser.mutate({
-      accountName: formState.username,
-      fullName: fullName,
+      username: formState.username,
+      firstName: formState.firstName,
+      lastName: formState.lastName,
       email: formState.email,
       avatarUrl: '/images/avatar1.svg',
     })
