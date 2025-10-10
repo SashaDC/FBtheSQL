@@ -26,3 +26,23 @@ body {
   background-color: rgb(48, 48, 48);
   cursor: pointer;
 }
+
+.thumbnail {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  flex: 0 0 200px;
+  padding: 10px;
+}
+
+input {
+ padding: 5px;
+ margin: 10px;
+}

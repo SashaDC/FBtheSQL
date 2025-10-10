@@ -28,12 +28,13 @@ router.get('/:id', async (req, res) => {
 
 router.post('/new', async (req, res) => {
   try {
-    const { fullName, email, accountName, avatarUrl } = req.body
+    const { firstName, lastName, email, username, avatarUrl } = req.body
     console.log('post ran')
     const id = await db.addNewUser({
-      fullName,
+      firstName,
+      lastName,
       email,
-      accountName,
+      username,
       avatarUrl,
     } as UserData)
     res.status(201).json(id)
@@ -46,12 +47,13 @@ router.post('/new', async (req, res) => {
 router.patch('/edit', async (req, res) => {
   try {
     const id = Number.parseInt(req.body.id)
-    const { fullName, email, accountName, avatarUrl } = req.body
+    const { firstName, lastName, email, username, avatarUrl } = req.body
     const editedUser: null | User = await db.editUser({
       id,
-      fullName,
+      firstName,
+      lastName,
       email,
-      accountName,
+      username,
       avatarUrl,
     } as User)
     editedUser ? res.status(201).json(editedUser) : res.sendStatus(500)
