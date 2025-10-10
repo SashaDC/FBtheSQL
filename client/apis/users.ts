@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { User, UserData } from '../../models/users'
+import { User, UserAndFriends, UserData } from '../../models/users'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -18,7 +18,14 @@ export async function editUser(data: User): Promise<User | void> {
   return response.body
 }
 
-export async function getUserById(userId: number): Promise<User | null> {
+export async function getUserById(userId: number): Promise<User> {
   const response = await request.get(`${rootURL}/users/${userId}`)
+  return response.body
+}
+
+export async function getUserPlusFriends(
+  userId: number,
+): Promise<UserAndFriends> {
+  const response = await request.get(`${rootURL}/users/${userId}/plus-friends`)
   return response.body
 }

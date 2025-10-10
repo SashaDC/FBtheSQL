@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import type { User, UserData } from '../../models/users.ts'
+import type { User, UserAndFriends, UserData } from '../../models/users.ts'
 
 import * as db from '../db/usersDb.ts'
+import * as friendsDb from '../db/friendshipsDb.ts'
 
 const router = Router()
 
@@ -19,7 +20,31 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params
     const user: User | null = await db.getUserById(Number.parseInt(id))
-    res.json(user)
+    if (user) {
+      res.status(201).json(user)
+    } else {
+      res.status(500).json({ message: 'Error retrieving user with user id' })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
+router.get('/:id/plus-friends', async (req, res) => {
+  try {
+    const { id } = req.params
+    const friends: User[] = await friendsDb.getFriendsOfAUser(
+      Number.parseInt(id),
+    )
+    const user: User | null = await db.getUserById(Number.parseInt(id))
+    if (user) {
+      res.status(201).json({ ...user, friends: friends } as UserAndFriends)
+    } else {
+      res
+        .status(500)
+        .json({ message: 'Error retrieving user and friends with user id' })
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })

@@ -4,6 +4,7 @@ import {
   getUserById,
   addNewUser,
   editUser,
+  getUserPlusFriends,
 } from '../apis/users.ts'
 
 export function useGetAllUsers() {
@@ -17,6 +18,16 @@ export function useGetUserById(id: number) {
   const query = useQuery({
     queryKey: [`user${id}`],
     queryFn: () => getUserById(id),
+  })
+  return {
+    ...query,
+  }
+}
+
+export function useGetUserPlusFriends(id: number) {
+  const query = useQuery({
+    queryKey: [`user${id}PlusFriends`],
+    queryFn: () => getUserPlusFriends(id),
   })
   return {
     ...query,
@@ -41,6 +52,7 @@ export function useEditUser(id: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-list'] })
       queryClient.invalidateQueries({ queryKey: [`user${id}`] })
+      queryClient.invalidateQueries({ queryKey: [`user${id}PlusFriends`] })
     },
   })
   return mutation
