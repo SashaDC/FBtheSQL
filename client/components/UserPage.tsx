@@ -1,4 +1,5 @@
 import { useAddNewFriendship } from '../hooks/useFriends.ts'
+import { useOutletContext } from 'react-router'
 import {
   useGetAllUsers,
   useGetUserById,
@@ -6,9 +7,12 @@ import {
   useEditUser,
   useGetUserPlusFriends,
 } from '../hooks/useUsers.ts'
+import { Credentials } from '../../models/outletContext.ts'
 
 function UserPage() {
   const userId = 1
+  const { setCredentials } = useOutletContext<Credentials>()
+
   const { data: allUsers } = useGetAllUsers()
   const { data: specifiedUser } = useGetUserById(userId)
   const { data: userAndFriends } = useGetUserPlusFriends(userId)
@@ -77,6 +81,16 @@ function UserPage() {
         {/* <button id="editFriend" onClick={handleClick}>
           Edit Friend
         </button> */}
+        <button
+          className="button"
+          onClick={() => {
+            // This signs the user out of the account.
+            setCredentials(false)
+            sessionStorage.removeItem('credentials')
+          }}
+        >
+          Log Out
+        </button>
       </div>
     </>
   )
