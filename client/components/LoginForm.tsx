@@ -1,8 +1,14 @@
 import { useState, ChangeEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useOutletContext, useNavigate } from 'react-router'
+import { Credentials } from '../../models/outletContext'
 
 export default function SignUpForm() {
-  // The useState/handleChange allows the users text to show while typing
+  // The useOutletContext passes down the useState from the parent component to all the children components.
+  const { setCredentials } = useOutletContext<Credentials>()
+  // Navigates the routes.
+  const navigate = useNavigate()
+
+  // The useState/handleChange allows the users text to show while typing.
   const [formState, setFormState] = useState({
     username: '',
     email: '',
@@ -21,7 +27,10 @@ export default function SignUpForm() {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     // TO DO: check if data matches anything in database so that user can log in.
+    // If it's not a match it needs to specify where they got an issue. (eg. Username or email doesn't exist, username or email incorrect.)
     // Note: maybe make it its own hook/component.
+    setCredentials(true)
+    navigate('/')
   }
 
   return (
