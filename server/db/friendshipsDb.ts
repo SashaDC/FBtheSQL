@@ -8,8 +8,9 @@ export async function getFriendsOfAUser(id: number): Promise<User[]> {
     .where('friendships.user_1', id)
     .select([
       'users.id',
-      'users.full_name as fullName',
-      'users.account_name as accountName',
+      'users.first_name as firstName',
+      'users.last_name as lastName',
+      'users.username as username',
       'users.email',
       'users.avatar_url as avatarUrl',
     ])
@@ -19,8 +20,9 @@ export async function getFriendsOfAUser(id: number): Promise<User[]> {
     .where('friendships.user_2', id)
     .select([
       'users.id',
-      'users.full_name as fullName',
-      'users.account_name as accountName',
+      'users.first_name as firstName',
+      'users.last_name as lastName',
+      'users.username as username',
       'users.email',
       'users.avatar_url as avatarUrl',
     ])

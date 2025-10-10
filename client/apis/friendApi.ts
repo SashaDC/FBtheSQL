@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { FriendshipData } from '../../models/friends'
+import type { FriendshipData } from '../../models/friends'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 

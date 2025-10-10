@@ -23,6 +23,14 @@ export async function getUserById(userId: number): Promise<User> {
   return response.body
 }
 
+export async function deleteUserById(userId: number): Promise<void> {
+  console.log(userId)
+  const response = await request
+    .delete(`${rootURL}/users/delete`)
+    .send({ id: userId })
+  return response.body
+}
+
 export async function getUserPlusFriends(
   userId: number,
 ): Promise<UserAndFriends> {

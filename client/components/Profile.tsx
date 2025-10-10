@@ -1,31 +1,24 @@
-import { useGetUserById } from '../hooks/useUsers.ts'
-import { Link } from 'react-router'
+import ProfileDetail from './ProfileDetail'
+import { useParams } from 'react-router'
 
-export default function Profile() {
-  //TODO = remove hardcoding of userid
-  const { data: user, isError, isPending } = useGetUserById(1)
+interface Props {
+  userId?: number
+}
 
-  if (isPending) {
-    return <p>Loading...</p>
+export default function Profile({ userId }: Props) {
+  //If the profile component has been sent a userId prop, then use that to return
+  //the profile details component.
+  //If not, check and use the url parameter value.
+  const { id } = useParams()
+  const idAsNum = Number(id)
+
+  if (userId) {
+    return <ProfileDetail userId={userId} />
   }
 
-  if (isError || !user) {
-    return <p>{`Error retrieving profile information`}</p>
+  if (id && !Number.isNaN(idAsNum) && Number.isInteger(idAsNum)) {
+    return <ProfileDetail userId={idAsNum} />
   }
 
-  return (
-    <div>
-      <h2>{user.username}</h2>
-      <div>
-        <img
-          className="thumbnail"
-          src={'/images/avatar1.svg'}
-          alt={`Avatar of ${user.username}`}
-        />
-        <p>Name: {`${user.firstName} ${user.lastName}`}</p>
-        <p>Email: {user.email}</p>
-        <Link to={`/edit/${user.id}`}>Edit profile</Link>
-      </div>
-    </div>
-  )
+  return <p>Profile not found</p>
 }

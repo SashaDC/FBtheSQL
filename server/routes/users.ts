@@ -88,4 +88,15 @@ router.patch('/edit', async (req, res) => {
   }
 })
 
+router.delete('/delete', async (req, res) => {
+  try {
+    const { id } = req.body
+    await db.deleteUserById(Number.parseInt(id))
+    res.sendStatus(201)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 export default router
