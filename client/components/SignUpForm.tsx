@@ -9,36 +9,13 @@ export default function SignUpForm() {
   const { setCredentials } = useOutletContext<Credentials>()
   // Navigates the routes.
   const navigate = useNavigate()
-  // The useState/handleChange allows the users text to show while typing
-  const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-  })
-
-  const handleChange = (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = evt.currentTarget
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
 
   const addNewUser = useAddNewUser()
 
   const submitForm = (updatedUser: UserData) => {
     // Adds info to database
     addNewUser.mutate(
-      {
-        username: formState.username,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-        email: formState.email,
-        avatarUrl: '/images/avatar1.svg',
-      },
+      { ...updatedUser },
       {
         onSuccess: (data: number) => {
           if (!data) return
