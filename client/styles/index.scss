@@ -1,6 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
 
-html, 
+html,
 body {
   font-family: 'Montserrat', sans-serif;
+}
+
+// Basic button styling, feel free to edit or change.
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  text-decoration: none;
+  font-size: 12px;
+  color: black;
+  background-color: grey;
+  border: 1px solid black;
+  border-radius: 7px;
+  margin: 5px;
+}
+
+.button:hover {
+  color: rgb(221, 221, 221);
+  background-color: rgb(48, 48, 48);
+  cursor: pointer;
+}
+
+.thumbnail {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  flex: 0 0 200px;
+  padding: 10px;
+}
+
+input {
+ padding: 5px;
+ margin: 10px;
 }
