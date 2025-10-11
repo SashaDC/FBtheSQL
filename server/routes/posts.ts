@@ -38,4 +38,31 @@ router.post('/', async (req: Request, res: Response) => {
   }
 })
 
+router.delete('/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  try {
+    const removed = await db<posts>('posts').where({ id }).del()
+    if (removed) {
+      res.status(200).json({ message: 'Post was deleted' })
+    } else {
+      res.status(404).json({ message: 'No post found ' })
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Error deleting post :(', e })
+  }
+})
+
+router.put('/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const { name, content, date, user_id } = req.body
+  try {
+    const [updatedPost] = await db<posts>('posts')
+      .where({ id })
+      .update({ name, content, date, user_id })
+      .returning('*')
+    res.status(200).json(updatedPost)
+  } catch (e) {
+    res.status(500).json({ message: 'Error updating post :(' })
+  }
+})
 export default router

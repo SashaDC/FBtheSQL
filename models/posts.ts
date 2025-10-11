@@ -6,9 +6,8 @@ export interface posts {
   user_id: number
 }
 // commands file
-// display posts
-// create posts
-//update posts
-// delete posts
-//search by user id
-// search by date
+// display posts 1
+// create posts 1
+//update posts1
+// delete posts 1
+//search by id 1
