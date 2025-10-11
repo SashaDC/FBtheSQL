@@ -26,15 +26,10 @@ export default function SignUpForm() {
     }))
   }
 
-  // TO DO: fix this
-  // hardcoded value temporary.
   const loginCheck = useCheckLogin()
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    // TO DO: check if data matches anything in database so that user can log in.
-    // If it's not a match it needs to specify where they got an issue. (eg. Username or email doesn't exist, username or email incorrect.)
-    // Note: maybe make it its own hook/component.
     loginCheck.mutate(formState, {
       onSuccess: (data: UserLogin) => {
         if (!data.id) {
