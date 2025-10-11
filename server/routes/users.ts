@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import type { User, UserAndFriends, UserData } from '../../models/users.ts'
+import type {
+  User,
+  UserAndFriends,
+  UserData,
+  UserLogin,
+} from '../../models/users.ts'
 
 import * as db from '../db/usersDb.ts'
 import * as friendsDb from '../db/friendshipsDb.ts'
@@ -25,6 +30,29 @@ router.get('/:id', async (req, res) => {
     } else {
       res.status(500).json({ message: 'Error retrieving user with user id' })
     }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
+router.post('/login', async (req, res) => {
+  try {
+    const { username, email } = req.body
+    console.log('post ran')
+    const { usernameMatch, emailMatch } = await db.getLoginDetails({
+      username,
+      email,
+    } as UserLogin)
+    if (!usernameMatch && !emailMatch) {
+      return res.json({ message: 'No Match' })
+    }
+
+    if ((usernameMatch && !emailMatch) || (!usernameMatch && emailMatch)) {
+      return res.json({ message: 'Incorrect Details' })
+    }
+
+    return res.json({ id: usernameMatch.id })
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
