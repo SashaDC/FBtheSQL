@@ -27,5 +27,13 @@ export async function updatePost(data: posts): Promise<posts> {
 }
 
 export async function deletePostById(postId: number): Promise<void> {
-  await request.delete(`${rootURL}/posts/${postId}`)
+  console.log('Attempting to delete post:', postId)
+  console.log('URL:', `${rootURL}/posts/${postId}`)
+  try {
+    const response = await request.delete(`${rootURL}/posts/${postId}`)
+    console.log('Delete response:', response)
+  } catch (error) {
+    console.error('Delete failed:', error)
+    throw error
+  }
 }

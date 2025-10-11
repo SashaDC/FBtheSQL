@@ -5,17 +5,14 @@ const router = express.Router()
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const allPosts: posts[] = await db<posts>('posts')
-      .join('users', 'posts.user_id', 'users.id')
-      .select(
-        'posts.id as id',
-        'posts.title as title',
-        'posts.content as content',
-        'posts.date as date',
-        'users.username as user_id',
-      )
+    const allPosts = await db('posts').join(
+      'users',
+      'posts.user_id',
+      'users.id',
+    ).select
     res.status(200).json(allPosts)
   } catch (error) {
+    console.error('GET posts error:', error)
     res.status(500).json({ message: 'Error grabbing the posts :(', error })
   }
 })

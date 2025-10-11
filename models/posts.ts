@@ -4,4 +4,5 @@ export interface posts {
   content: string
   date: string
   user_id: number
+  username?: string
 }
