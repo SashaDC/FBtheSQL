@@ -1,4 +1,6 @@
+import { post } from 'superagent'
 import { useGetPosts } from '../hooks/usePosts'
+import DeletePost from './DeletePost'
 
 export default function Posts() {
   const { isPending, isError, data } = useGetPosts()
@@ -23,6 +25,7 @@ export default function Posts() {
               <p className="date">{data.date}</p>
               {/* Make the data.user_id match the users id. Possibly a database.join hook/query maybe?*/}
               <p className="user">{data.user_id}</p>
+              <DeletePost postId={data.id} />
             </div>
           </li>
         ))}

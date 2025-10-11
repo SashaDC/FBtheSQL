@@ -39,7 +39,17 @@ export function useUpdatePost() {
 }
 
 // Delete a post
-export function useDeletePostByUserId() {
+export function useDeletePost() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: deletePostById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+    },
+  })
+}
+// delete by id
+export function useDeletePostById() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: deletePostById,

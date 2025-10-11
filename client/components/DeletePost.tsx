@@ -1,15 +1,15 @@
-import { useDeletePostByUserId } from '../hooks/usePosts'
+import { useDeletePostById } from '../hooks/usePosts'
 import { useNavigate } from 'react-router'
 
 interface Props {
-  userId: number
+  postId: number
 }
 
-export default function DeletePost({ userId }: Props) {
-  const deletePost = useDeletePostByUserId()
+export default function DeletePost({ postId }: Props) {
+  const deletePost = useDeletePostById()
   const navigate = useNavigate()
   const handleClick = () => {
-    deletePost.mutate(userId)
+    deletePost.mutate(postId)
     navigate('/posts')
   }
   return (
