@@ -1,4 +1,9 @@
 export interface Credentials {
-  credentials: boolean
-  setCredentials: (loggedIn: boolean) => void
+  credentials: {
+    loggedIn: boolean
+    userId: number | null
+  }
+  setCredentials: (
+    value: { loggedIn: boolean; userId: number | null } | null,
+  ) => void
 }

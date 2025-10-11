@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react'
 // Credentials is a useState that holds a boolean in the tab's session storage and uses the useEffect to change the credentials if any updates to the state happen.
 
 function App() {
-  const [credentials, setCredentials] = useState(() => {
+  const [credentials, setCredentials] = useState<{
+    loggedIn: boolean
+    userId: number | null
+  } | null>(() => {
     const saved = sessionStorage.getItem('credentials')
-    return saved ? JSON.parse(saved) : false
+    return saved ? JSON.parse(saved) : null
   })
 
   useEffect(() => {
