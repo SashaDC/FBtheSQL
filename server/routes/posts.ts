@@ -36,7 +36,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/new', async (req: Request, res: Response) => {
   const { title, content, date, user_id } = req.body
   try {
     const [newPost] = await db<posts>('posts')
