@@ -1,50 +1,21 @@
-import { useState, ChangeEvent } from 'react'
 import { Link, useOutletContext, useNavigate } from 'react-router'
 import { useAddNewUser } from '../hooks/useUsers'
 import { Credentials } from '../../models/outletContext'
+import type { UserData } from '../../models/users'
+import EditUserForm from './EditUserForm'
 
 export default function SignUpForm() {
   // The useOutletContext passes down the useState from the parent component to all the children components.
   const { setCredentials } = useOutletContext<Credentials>()
   // Navigates the routes.
   const navigate = useNavigate()
-  // The useState/handleChange allows the users text to show while typing
-  const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-  })
-
-  const handleChange = (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = evt.currentTarget
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
 
   const addNewUser = useAddNewUser()
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault()
-    // Need to capitalize the first character of both first/last name.
-    // TO DO: set it up so that it verifies the data (No numbers/characters for first/last name)
-    // TO DO: check against database whether the data is there or not.
-    // If comes back as true: mention what needs to be changed, If it comes back false: add the new details to database and "login".
-    // Note: maybe make the checking/verifying data it's own component/hook??
-
+  const submitForm = (updatedUser: UserData) => {
     // Adds info to database
     addNewUser.mutate(
-      {
-        username: formState.username,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-        email: formState.email,
-        avatarUrl: '/images/avatar1.svg',
-      },
+      { ...updatedUser },
       {
         onSuccess: (data: number) => {
           if (!data) return
@@ -57,49 +28,7 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form">
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          placeholder="First Name"
-          value={formState.firstName}
-          onChange={handleChange}
-        />
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          placeholder="Last Name"
-          value={formState.lastName}
-          onChange={handleChange}
-        />
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Username"
-          value={formState.username}
-          onChange={handleChange}
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          placeholder="Email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-        <div></div>
-        <button type="submit" className="button">
-          Sign Up
-        </button>
-      </form>
-      {/* This gives the user an option to login rather than signing up */}
+      <EditUserForm submitForm={submitForm} submitLabel="Sign up" />
       <Link to="/login" className="button">
         Have An Account?
       </Link>

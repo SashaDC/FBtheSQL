@@ -4,7 +4,7 @@ export async function seed(knex) {
     {
       id: 1,
       username: 'kiwi305',
-      first_name: 'Graham ',
+      first_name: 'Graham',
       last_name: 'Rosco',
       email: 'rosco.rules@xtra.co.nz',
       avatar_url: '/images/avatar1.svg',
@@ -20,7 +20,7 @@ export async function seed(knex) {
     {
       id: 3,
       username: 'ruben1901',
-      first_name: 'Ruben ',
+      first_name: 'Ruben',
       last_name: 'Nova',
       email: 'nova@gmail.com',
       avatar_url: '/images/avatar3.svg',
@@ -28,7 +28,7 @@ export async function seed(knex) {
     {
       id: 4,
       username: 'solstice2',
-      first_name: 'Erin ',
+      first_name: 'Erin',
       last_name: 'Solstice',
       email: 'wandering@theinn.com',
       avatar_url: '/images/avatar4.svg',
@@ -36,7 +36,7 @@ export async function seed(knex) {
     {
       id: 5,
       username: 'theYoungOldMan',
-      first_name: 'Benjamin ',
+      first_name: 'Benjamin',
       last_name: 'Button',
       email: 'benjamin@gmail.com',
       avatar_url: '/images/avatar5.svg',
