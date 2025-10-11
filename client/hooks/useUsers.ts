@@ -7,6 +7,7 @@ import {
   getUserPlusFriends,
   deleteUserById,
 } from '../apis/users.ts'
+import { UserData } from '../../models/users.ts'
 
 export function useGetAllUsers() {
   const query = useQuery({ queryKey: ['user-list'], queryFn: getAllUsers })
@@ -38,7 +39,7 @@ export function useGetUserPlusFriends(id: number) {
 export function useAddNewUser() {
   const queryClient = useQueryClient()
   const mutation = useMutation({
-    mutationFn: addNewUser,
+    mutationFn: addNewUser as (data: UserData) => Promise<number>,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-list'] })
     },
