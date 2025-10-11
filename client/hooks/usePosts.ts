@@ -6,7 +6,6 @@ import {
   updatePost,
   deletePostById,
 } from '../apis/posts.ts'
-import { posts } from '../../models/posts.ts'
 
 //Get all posts
 export function useGetPosts() {

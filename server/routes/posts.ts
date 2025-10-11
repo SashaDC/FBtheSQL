@@ -5,12 +5,22 @@ const router = express.Router()
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const allPosts: posts[] = await db<posts>('posts').select('*')
+    const allPosts: posts[] = await db<posts>('posts')
+      .join('users', 'posts.user_id', 'users.id')
+      .select(
+        'posts.id as id',
+        'posts.title as title',
+        'posts.content as content',
+        'posts.date as date',
+        'users.username as user_id',
+      )
     res.status(200).json(allPosts)
   } catch (error) {
     res.status(500).json({ message: 'Error grabbing the posts :(', error })
   }
 })
+
+router.get('/')
 
 router.get('/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
@@ -26,11 +36,11 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 })
 
-router.post('/', async (req: Request, res: Response) => {
-  const { name, content, date, user_id } = req.body
+router.post('/new', async (req: Request, res: Response) => {
+  const { title, content, date, user_id } = req.body
   try {
     const [newPost] = await db<posts>('posts')
-      .insert({ name, content, date, user_id })
+      .insert({ title, content, date, user_id })
       .returning('*')
     res.status(201).json(newPost)
   } catch (e) {
@@ -54,11 +64,11 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
 router.put('/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
-  const { name, content, date, user_id } = req.body
+  const { title, content, date, user_id } = req.body
   try {
     const [updatedPost] = await db<posts>('posts')
       .where({ id })
-      .update({ name, content, date, user_id })
+      .update({ title, content, date, user_id })
       .returning('*')
     res.status(200).json(updatedPost)
   } catch (e) {
