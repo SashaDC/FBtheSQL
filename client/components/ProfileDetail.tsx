@@ -29,7 +29,7 @@ export default function ProfileDetail({ userId }: Props) {
       <div>
         <img
           className="thumbnail"
-          src={'/images/avatar1.svg'}
+          src={user.avatarUrl}
           alt={`Avatar of ${user.username}`}
         />
         <p>Name: {`${user.firstName} ${user.lastName}`}</p>
