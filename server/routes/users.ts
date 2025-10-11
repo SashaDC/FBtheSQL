@@ -82,7 +82,6 @@ router.get('/:id/plus-friends', async (req, res) => {
 router.post('/new', async (req, res) => {
   try {
     const { firstName, lastName, email, username, avatarUrl } = req.body
-    console.log('post ran')
     const id = await db.addNewUser({
       firstName,
       lastName,
