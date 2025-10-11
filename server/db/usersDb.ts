@@ -86,6 +86,5 @@ export async function editUser({
 }
 
 export async function deleteUserById(id: number): Promise<void> {
-  console.log('delete', id)
   await db('users').where('users.id', id).del()
 }
