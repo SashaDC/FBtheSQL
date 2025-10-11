@@ -1,5 +1,6 @@
 import request from 'superagent'
 import { posts } from '../../models/posts'
+import { response } from 'express'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -25,6 +26,9 @@ export async function updatePost(data: posts): Promise<posts> {
   return response.body
 }
 
-export async function deletePostById(id: number): Promise<void> {
-  await request.delete(`${rootURL}/posts/delete`).send({ id })
+export async function deletePostById(userId: number): Promise<void> {
+  const response = await request
+    .delete(`${rootURL}/posts/delete`)
+    .send({ id: userId })
+  return response.body
 }

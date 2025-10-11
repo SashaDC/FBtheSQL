@@ -39,7 +39,7 @@ export function useUpdatePost() {
 }
 
 // Delete a post
-export function useDeletePost() {
+export function useDeletePostByUserId() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: deletePostById,
