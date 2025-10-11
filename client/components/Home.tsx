@@ -6,7 +6,7 @@ import { Credentials } from '../../models/outletContext'
 export default function Home() {
   // The useOutletContext passes down the useState from the parent component to all the children components.
   const { credentials } = useOutletContext<Credentials>()
-  if (!credentials) {
+  if (!credentials?.loggedIn) {
     return (
       <>
         <Link to="sign_up" className="button">

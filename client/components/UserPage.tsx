@@ -3,18 +3,17 @@ import { Credentials } from '../../models/outletContext.ts'
 import Profile from './Profile.tsx'
 
 function UserPage() {
-  const { setCredentials } = useOutletContext<Credentials>()
-
+  const { credentials, setCredentials } = useOutletContext<Credentials>()
   return (
     <>
       <div className="app">
-        {/* TODO - have userId relate to the login details so user can see their page */}
-        <Profile userId={1} />
+        {/* fallback number because userId can be null */}
+        <Profile userId={credentials.userId ?? 0} />
         <button
           className="button"
           onClick={() => {
             // This signs the user out of the account.
-            setCredentials(false)
+            setCredentials(null)
             sessionStorage.removeItem('credentials')
           }}
         >
