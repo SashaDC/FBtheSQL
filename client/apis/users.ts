@@ -23,6 +23,11 @@ export async function getUserById(userId: number): Promise<User> {
   return response.body
 }
 
+export async function checkLogin(details: { username: string; email: string }) {
+  const response = await request.post(`${rootURL}/users/login`).send(details)
+  return response.body
+}
+
 export async function deleteUserById(userId: number): Promise<void> {
   console.log(userId)
   const response = await request

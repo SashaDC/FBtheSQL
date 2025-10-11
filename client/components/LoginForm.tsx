@@ -1,6 +1,8 @@
 import { useState, ChangeEvent } from 'react'
 import { Link, useOutletContext, useNavigate } from 'react-router'
 import { Credentials } from '../../models/outletContext'
+import { useCheckLogin } from '../hooks/useUsers'
+import { UserLogin } from '../../models/users'
 
 export default function SignUpForm() {
   // The useOutletContext passes down the useState from the parent component to all the children components.
@@ -24,17 +26,20 @@ export default function SignUpForm() {
     }))
   }
 
-  // TO DO: fix this
-  // hardcoded value temporary.
-  const userId = 1
+  const loginCheck = useCheckLogin()
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    // TO DO: check if data matches anything in database so that user can log in.
-    // If it's not a match it needs to specify where they got an issue. (eg. Username or email doesn't exist, username or email incorrect.)
-    // Note: maybe make it its own hook/component.
-    setCredentials({ loggedIn: true, userId: userId })
-    navigate('/')
+    loginCheck.mutate(formState, {
+      onSuccess: (data: UserLogin) => {
+        if (!data.id) {
+          alert(data.message)
+        } else {
+          setCredentials({ loggedIn: true, userId: data.id })
+          navigate('/')
+        }
+      },
+    })
   }
 
   return (

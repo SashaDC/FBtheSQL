@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   getAllUsers,
   getUserById,
+  checkLogin,
   addNewUser,
   editUser,
   getUserPlusFriends,
@@ -24,6 +25,13 @@ export function useGetUserById(id: number) {
   return {
     ...query,
   }
+}
+
+export function useCheckLogin() {
+  const mutation = useMutation({
+    mutationFn: checkLogin,
+  })
+  return mutation
 }
 
 export function useGetUserPlusFriends(id: number) {

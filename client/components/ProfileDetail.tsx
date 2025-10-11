@@ -1,18 +1,25 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import EditUserForm from './EditUserForm'
-import DeleteAccount from './DeleteAccount'
 import type { UserData } from '../../models/users'
-import { useEditUser, useGetUserPlusFriends } from '../hooks/useUsers'
+import {
+  useDeleteUserById,
+  useEditUser,
+  useGetUserPlusFriends,
+} from '../hooks/useUsers'
+import { useOutletContext } from 'react-router'
+import { Credentials } from '../../models/outletContext'
 
 interface Props {
   userId: number
 }
 
 export default function ProfileDetail({ userId }: Props) {
+  const { setCredentials } = useOutletContext<Credentials>()
   const { data: user, isError, isPending } = useGetUserPlusFriends(userId)
   const [editFormVisible, setEditFormVisible] = useState<boolean>(false)
   const editUser = useEditUser(userId)
+  const deleteUser = useDeleteUserById(userId)
 
   if (isPending) {
     return <p>Loading...</p>
@@ -25,10 +32,17 @@ export default function ProfileDetail({ userId }: Props) {
   const submitForm = (editedUser: UserData) => {
     console.log(editedUser)
     editUser.mutate({ ...editedUser, id: userId })
+    setEditFormVisible(false)
   }
 
   const handleClick = () => {
     setEditFormVisible(true)
+  }
+
+  const handleDelete = () => {
+    deleteUser.mutate(userId)
+    setCredentials(null)
+    sessionStorage.removeItem('credentials')
   }
 
   return (
@@ -75,7 +89,7 @@ export default function ProfileDetail({ userId }: Props) {
           />
         )}
       </div>
-      <DeleteAccount userId={user.id} />
+      <button onClick={handleDelete}>Delete profile</button>
     </div>
   )
 }

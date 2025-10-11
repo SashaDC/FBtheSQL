@@ -1,5 +1,5 @@
 import db from './connection.ts'
-import type { User, UserData } from '../../models/users.ts'
+import type { User, UserData, UserLogin } from '../../models/users.ts'
 
 export async function getAllUsers(): Promise<User[]> {
   const response = await db('users').select([
@@ -26,6 +26,12 @@ export async function getUserById(id: number): Promise<User | null> {
     ])
     .first()
   return response as User | null
+}
+
+export async function getLoginDetails({ username, email }: UserLogin) {
+  const usernameMatch = await db('users').where('username', username).first()
+  const emailMatch = await db('users').where('email', email).first()
+  return { usernameMatch, emailMatch }
 }
 
 export async function addNewUser({
