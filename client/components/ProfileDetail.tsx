@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function ProfileDetail({ userId }: Props) {
-  const { setCredentials } = useOutletContext<Credentials>()
+  const { setCredentials, credentials } = useOutletContext<Credentials>()
   const { data: user, isError, isPending } = useGetUserPlusFriends(userId)
   const [editFormVisible, setEditFormVisible] = useState<boolean>(false)
   const editUser = useEditUser(userId)
@@ -58,7 +58,13 @@ export default function ProfileDetail({ userId }: Props) {
             />
             <p>Name: {`${user.firstName} ${user.lastName}`}</p>
             <p>Email: {user.email}</p>
-            <button onClick={handleClick}>Edit profile</button>
+            {credentials.userId === userId && (
+              <>
+                <button onClick={handleClick}>Edit profile</button>
+                <button onClick={handleDelete}>Delete account</button>
+              </>
+            )}
+
             <div>
               <h3>Friends of {user.firstName}</h3>
               <ol>
@@ -74,7 +80,6 @@ export default function ProfileDetail({ userId }: Props) {
             </div>
           </div>
         )}
-        {/* TODO - edit form and delete account should only be visible if this is the users profile */}
         {editFormVisible && (
           <EditUserForm
             submitForm={submitForm}
@@ -89,7 +94,6 @@ export default function ProfileDetail({ userId }: Props) {
           />
         )}
       </div>
-      <button onClick={handleDelete}>Delete profile</button>
     </div>
   )
 }
