@@ -1,8 +1,13 @@
 import { useState, ChangeEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useOutletContext, useNavigate } from 'react-router'
 import { useAddNewUser } from '../hooks/useUsers'
+import { Credentials } from '../../models/outletContext'
 
 export default function SignUpForm() {
+  // The useOutletContext passes down the useState from the parent component to all the children components.
+  const { setCredentials } = useOutletContext<Credentials>()
+  // Navigates the routes.
+  const navigate = useNavigate()
   // The useState/handleChange allows the users text to show while typing
   const [formState, setFormState] = useState({
     firstName: '',
@@ -32,13 +37,22 @@ export default function SignUpForm() {
     // Note: maybe make the checking/verifying data it's own component/hook??
 
     // Adds info to database
-    addNewUser.mutate({
-      username: formState.username,
-      firstName: formState.firstName,
-      lastName: formState.lastName,
-      email: formState.email,
-      avatarUrl: '/images/avatar1.svg',
-    })
+    addNewUser.mutate(
+      {
+        username: formState.username,
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+        email: formState.email,
+        avatarUrl: '/images/avatar1.svg',
+      },
+      {
+        onSuccess: (data: number) => {
+          if (!data) return
+          setCredentials({ loggedIn: true, userId: data })
+          navigate('/')
+        },
+      },
+    )
   }
 
   return (
