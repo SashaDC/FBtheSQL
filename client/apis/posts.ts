@@ -1,5 +1,6 @@
-import request from 'superagent'
+import request, { post } from 'superagent'
 import { posts } from '../../models/posts'
+import { response } from 'express'
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
 
@@ -25,6 +26,14 @@ export async function updatePost(data: posts): Promise<posts> {
   return response.body
 }
 
-export async function deletePostById(id: number): Promise<void> {
-  await request.delete(`${rootURL}/posts/delete`).send({ id })
+export async function deletePostById(postId: number): Promise<void> {
+  console.log('Attempting to delete post:', postId)
+  console.log('URL:', `${rootURL}/posts/${postId}`)
+  try {
+    const response = await request.delete(`${rootURL}/posts/${postId}`)
+    console.log('Delete response:', response)
+  } catch (error) {
+    console.error('Delete failed:', error)
+    throw error
+  }
 }
