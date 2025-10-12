@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react'
 import type { UserData } from '../../models/users'
-
+import { useCheckLogin } from '../hooks/useUsers'
 interface Props {
   submitForm: (updatedUser: UserData) => void
   currentUser?: UserData
@@ -35,14 +35,60 @@ export default function EditUserForm({
     }))
   }
 
+  const loginCheck = useCheckLogin()
+
+  const validateDetails = (details: UserData) => {
+    const lengthCheck = Object.entries(details)
+      .filter(([key]) => key !== 'avatarUrl')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .every(([key, value]) => typeof value === 'string' && value.length >= 3)
+    const nameCheck = Object.entries(details)
+      .filter(([key]) => key === 'firstName' || key === 'lastName')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .every(([key, value]) => !/^([^0-9]* )$/.test(value))
+    const avatarCheck = !!details.avatarUrl
+    if (!lengthCheck) {
+      return 'All input fields must be 3 characters or longer.'
+    }
+    if (!nameCheck) {
+      return 'Names must not contain numbers, special characters or spaces.'
+    }
+    if (!avatarCheck) {
+      return 'You must select an avatar.'
+    } else {
+      return details
+    }
+  }
+
+  const nameFormatting = (name: string) => {
+    const newName = name.toLowerCase()
+    return newName.charAt(0).toUpperCase() + newName.slice(1)
+  }
+
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    // Need to capitalize the first character of both first/last name.
-    // TO DO: set it up so that it verifies the data (No numbers/characters for first/last name)
-    // TO DO: check against database whether the data is there or not.
-    // If comes back as true: mention what needs to be changed, If it comes back false: add the new details to database and "login".
-    // Note: maybe make the checking/verifying data it's own component/hook??
-    submitForm({ ...formState })
+    const result = validateDetails(formState)
+    if (typeof result == 'string') {
+      alert(result)
+      return
+    }
+    loginCheck.mutate(formState, {
+      onSuccess: (data) => {
+        if (data.id || data.message == 'Incorrect Details') {
+          alert('Username or Email already in use')
+          return
+        } else {
+          return formState
+        }
+      },
+    })
+
+    const formattedState = {
+      ...formState,
+      firstName: nameFormatting(formState.firstName),
+      lastName: nameFormatting(formState.lastName),
+    }
+    submitForm(formattedState)
   }
 
   return (
