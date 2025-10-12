@@ -10,7 +10,7 @@ export default function DeletePost({ postId }: Props) {
   const navigate = useNavigate()
   const handleClick = () => {
     deletePost.mutate(postId)
-    navigate('/posts')
+    navigate('/')
   }
   return (
     <>
