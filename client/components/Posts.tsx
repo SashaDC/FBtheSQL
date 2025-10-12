@@ -48,7 +48,7 @@ export default function Posts() {
                 <span className="title">{post.title}</span>
                 <p className="content">{post.content}</p>
                 <p className="date">{post.date}</p>
-                <p className="user">{post.user_id}</p>
+                <p className="user">{post.username}</p>
                 {isOwnPost && <DeletePost postId={post.id} />}
               </div>
             </li>
