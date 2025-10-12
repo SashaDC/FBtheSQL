@@ -69,13 +69,14 @@ export default function SignUpForm() {
         </button>
       </form>
       {/* This gives the user an option to sign up rather than logging in */}
-      <Link to="/sign_up" className="button">
-        Don&apos;t Have An Account?
-      </Link>
-      <br />
-      <Link to="/" className="button">
-        Back
-      </Link>
+      <div className="links">
+        <Link to="/sign_up" className="button">
+          Register
+        </Link>
+        <Link to="/" className="button">
+          Back
+        </Link>
+      </div>
     </>
   )
 }

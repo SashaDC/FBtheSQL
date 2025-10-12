@@ -19,14 +19,18 @@ function App() {
 
   return (
     <>
-      <div className="app">
-        <header>
-          <h1>FB the Sequel</h1>
+      <div className="app grid-container">
+        <header className="grid-header">
+          <h1>FB the SQL</h1>
         </header>
-        <main>
+        <main className="grid-main">
           <Outlet context={{ credentials, setCredentials }} />
         </main>
-        <footer></footer>
+        <footer className="grid-footer">
+          <div>
+            <p>Developed by Cypress, Jen, Luis and Sasha</p>
+          </div>
+        </footer>
       </div>
     </>
   )
