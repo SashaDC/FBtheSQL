@@ -47,6 +47,11 @@ export default function ProfileDetail({ userId }: Props) {
 
   return (
     <div>
+      {credentials.userId !== userId && (
+        <Link className="button" to={'/'}>
+          Home
+        </Link>
+      )}
       <div className="profile">
         {!editFormVisible && (
           <div>
