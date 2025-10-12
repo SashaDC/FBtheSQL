@@ -11,13 +11,18 @@ h1 {
   font-weight: 800;
   text-shadow: 2px 4px 6px black;
   color: #8fb3bb;
+  margin: 10px;
+}
+
+.post-container {
+  flex-grow: 5;
 }
 
 .grid-container {
   display: grid;
   gap: 20px; 
   grid-template-rows: auto;
-  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-columns: 1fr 8fr 1fr;
 }
 
 .grid-header {
@@ -35,17 +40,101 @@ h1 {
 .grid-footer {
   grid-column-start: 1;
   grid-column-end: 4;
-  font-size: x-small;
+  font-size: small;
 }
 
 label {
   display: block;
 }
 
-input {
+.login-input {
   align-self: left;
   left: 0px;
   max-width: 50%
+}
+
+ol, ul {
+  margin-block-start: 0%;
+  margin-block-end: 0%;
+  padding-inline-start: 0%;
+  list-style-type: none
+}
+
+h4 {
+  margin: 0px;
+}
+
+.friends {
+  padding: 50px;
+}
+
+.avatar {
+  width: 200px;
+}
+
+button {
+  padding:5px;
+}
+
+#edit-user-form {
+  text-align: left;
+  padding: 10px;
+  background-color: #c7d9dd;
+}
+
+fieldset {
+  border: 0px;
+}
+
+#edit-user-form .button {
+  text-align: center;
+}
+
+.profile {
+  padding: 20px;
+}
+
+.left {
+  text-align: center;
+}
+
+.post {
+  background-color: #c7d9dd;
+  margin: 15px;
+  padding: 5px;
+}
+
+.create-post {
+  padding-top: 40px;
+}
+
+.title {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.user {
+  margin: 5px;
+}
+
+.date {
+  font-style: italic;
+  margin: 0px;
+}
+
+.large-input {
+  max-width: 200px;
+  height: 200px;
+}
+
+.content {
+  text-align: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;;
+  margin: 0px;
+  margin-block-start: 0%;
+  margin-block-end:0%
 }
 
 // Basic button styling, feel free to edit or change.
@@ -77,6 +166,10 @@ input {
   padding: 50px 30px 30px 30px;
 }
 
+.profile h4, h3 {
+  text-align: center;
+  padding: 5px;
+}
 
 // Small images
 .thumbnail {
@@ -97,4 +190,9 @@ input {
 input {
  padding: 5px;
  margin: 10px;
+}
+
+.post-container {
+  flex-grow: 2;
+  padding: 20px;
 }

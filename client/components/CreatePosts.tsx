@@ -39,29 +39,27 @@ export default function CreatePosts({ userId }: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form">
+      <form onSubmit={handleSubmit} className="form create-post">
+        <h3>Create a post</h3>
         <label htmlFor="title">Title:</label>
         <input
           type="text"
           id="title"
           name="title"
-          placeholder="Title"
           value={formState.title}
           onChange={handleChange}
         />
         <label htmlFor="content">Content:</label>
         <input
+          className="large-input"
           type="text"
           id="content"
           name="content"
-          placeholder="Content"
           value={formState.content}
           onChange={handleChange}
         />
         <div></div>
-        <button type="submit" className="button">
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </>
   )
