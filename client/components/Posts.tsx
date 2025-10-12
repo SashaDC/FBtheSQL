@@ -16,9 +16,9 @@ export default function Posts() {
   }
 
   return (
-    <>
-      <h2>Posts:</h2>
-      <ul className="posts">
+    <div className="posts-container">
+      <h3>Recent posts</h3>
+      <div className="posts">
         {data?.map((post) => {
           const postUserId = String(post.user_id)
           const currentUserId = String(credentials?.userId)
@@ -43,18 +43,18 @@ export default function Posts() {
           console.log('---')
 
           return (
-            <li key={post.id} className="post">
-              <div className="name">
-                <span className="title">{post.title}</span>
+            <div key={post.id} className="post">
+              <div className="name post">
+                <h4 className="title">{post.title}</h4>
                 <p className="content">{post.content}</p>
                 <p className="date">{post.date}</p>
                 <p className="user">{post.username}</p>
                 {isOwnPost && <DeletePost postId={post.id} />}
               </div>
-            </li>
+            </div>
           )
         })}
-      </ul>
-    </>
+      </div>
+    </div>
   )
 }

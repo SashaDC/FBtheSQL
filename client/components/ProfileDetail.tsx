@@ -47,17 +47,22 @@ export default function ProfileDetail({ userId }: Props) {
 
   return (
     <div>
-      <h2>{user.username}</h2>
-      <div>
+      {credentials.userId !== userId && (
+        <Link className="button" to={'/'}>
+          Home
+        </Link>
+      )}
+      <div className="profile">
         {!editFormVisible && (
           <div>
+            <h2>{user.username}</h2>
             <img
               className="thumbnail"
               src={user.avatarUrl}
               alt={`Avatar of ${user.username}`}
             />
-            <p>Name: {`${user.firstName} ${user.lastName}`}</p>
-            <p>Email: {user.email}</p>
+            <p>{`${user.firstName} ${user.lastName}`}</p>
+            <p>{user.email}</p>
             {credentials.userId === userId && (
               <>
                 <button onClick={handleClick}>Edit profile</button>
@@ -65,8 +70,8 @@ export default function ProfileDetail({ userId }: Props) {
               </>
             )}
 
-            <div>
-              <h3>Friends of {user.firstName}</h3>
+            <div className="friends">
+              <h3>Friends</h3>
               <ol>
                 {user.friends[0] &&
                   user.friends.map((friend) => (
@@ -83,7 +88,7 @@ export default function ProfileDetail({ userId }: Props) {
         {editFormVisible && (
           <EditUserForm
             submitForm={submitForm}
-            submitLabel="Save profile changes"
+            submitLabel="Save changes"
             currentUser={{
               username: user.username,
               firstName: user.firstName,

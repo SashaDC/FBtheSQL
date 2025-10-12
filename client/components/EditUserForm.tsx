@@ -93,71 +93,92 @@ export default function EditUserForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form">
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          placeholder="First Name"
-          value={formState.firstName}
-          onChange={handleChange}
-        />
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          placeholder="Last Name"
-          value={formState.lastName}
-          onChange={handleChange}
-        />
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Username"
-          value={formState.username}
-          onChange={handleChange}
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          placeholder="Email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-        <fieldset className="flex-container">
-          {Array(5)
-            .fill('')
-            .map((_, i) => (
-              <label
-                className="flex-item"
-                key={`label-avatar${i + 1}`}
-                htmlFor={`avatar${i + 1}`}
-              >
-                <img
-                  className="thumbnail"
-                  src={`/images/avatar${i + 1}.svg`}
-                  alt={`Avatar ${i + 1}`}
-                />
-                <input
-                  type="radio"
-                  value={`/images/avatar${i + 1}.svg`}
-                  name="avatarUrl"
-                  onChange={handleChange}
-                />
-                Avatar {i + 1}
-              </label>
-            ))}
+      <form onSubmit={handleSubmit} className="form" id="edit-user-form">
+        <h3>Edit your profile</h3>
+
+        <div className="flex-container">
+          <label htmlFor="firstName">
+            First Name:
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              value={formState.firstName}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label htmlFor="lastName">
+            Last Name:
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              value={formState.lastName}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label htmlFor="username">
+            Username:
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+              value={formState.username}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label htmlFor="email">
+            Email:
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+
+        <fieldset>
+          <h4>Select an avatar</h4>
+          <div className="flex-container">
+            {Array(5)
+              .fill('')
+              .map((_, i) => (
+                <label
+                  className="flex-item avatar"
+                  key={`label-avatar${i + 1}`}
+                  htmlFor={`avatar${i + 1}`}
+                >
+                  <img
+                    className="thumbnail"
+                    src={`/images/avatar${i + 1}.svg`}
+                    alt={`Avatar ${i + 1}`}
+                  />
+                  <br></br>
+                  <input
+                    type="radio"
+                    value={`/images/avatar${i + 1}.svg`}
+                    name="avatarUrl"
+                    onChange={handleChange}
+                  />
+                  Avatar {i + 1}
+                </label>
+              ))}
+          </div>
         </fieldset>
-        <div></div>
-        <button type="submit" className="button">
-          {submitLabel}
-        </button>
+        <div className="left">
+          <button type="submit" className="button">
+            {submitLabel}
+          </button>
+        </div>
       </form>
     </>
   )

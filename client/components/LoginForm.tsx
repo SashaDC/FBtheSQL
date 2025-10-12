@@ -44,38 +44,44 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Username"
-          value={formState.username}
-          onChange={handleChange}
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          placeholder="Email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-        <div></div>
-        <button type="submit" className="button">
-          Login
-        </button>
-      </form>
-      {/* This gives the user an option to sign up rather than logging in */}
-      <Link to="/sign_up" className="button">
-        Don&apos;t Have An Account?
-      </Link>
-      <br />
-      <Link to="/" className="button">
-        Back
-      </Link>
+      <div className="grid-login">
+        {' '}
+        <form onSubmit={handleSubmit} className="form">
+          <label htmlFor="username">Username:</label>
+          <input
+            className="login-input"
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            value={formState.username}
+            onChange={handleChange}
+          />
+          <label htmlFor="email">Email:</label>
+          <input
+            className="login-input"
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={formState.email}
+            onChange={handleChange}
+          />
+          <div></div>
+          <button type="submit" className="button">
+            Login
+          </button>
+        </form>
+        {/* This gives the user an option to sign up rather than logging in */}
+        <div className="links">
+          <Link to="/sign_up" className="button">
+            Register
+          </Link>
+          <Link to="/" className="button">
+            Back
+          </Link>
+        </div>
+      </div>
     </>
   )
 }

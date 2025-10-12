@@ -8,21 +8,27 @@ function UserPage() {
   const { credentials, setCredentials } = useOutletContext<Credentials>()
   return (
     <>
-      <div className="app">
+      <div className="flex-container">
+        <div className="flex-item">
+          <button
+            className="button"
+            onClick={() => {
+              // This signs the user out of the account.
+              setCredentials(null)
+              sessionStorage.removeItem('credentials')
+            }}
+          >
+            Log Out
+          </button>
+          <CreatePosts userId={credentials.userId ?? 0} />
+        </div>
         {/* fallback number because userId can be null */}
-        <Profile userId={credentials.userId ?? 0} />
-        <CreatePosts userId={credentials.userId ?? 0} />
-        <Posts />
-        <button
-          className="button"
-          onClick={() => {
-            // This signs the user out of the account.
-            setCredentials(null)
-            sessionStorage.removeItem('credentials')
-          }}
-        >
-          Log Out
-        </button>
+        <div className="flex-item">
+          <Profile userId={credentials.userId ?? 0} />
+        </div>
+        <div className="flex-item post-container">
+          <Posts />
+        </div>
       </div>
     </>
   )
